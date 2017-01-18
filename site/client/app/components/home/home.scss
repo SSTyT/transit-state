@@ -1,0 +1,35 @@
+@import "../../app.scss";
+.home {
+    height: 100vh;
+    .counter {
+        h1 {
+            font-size: 20px;
+        }
+        font-size: 1.5em;
+    }
+    .switches {
+        font-size: 1.5em;
+        padding-top: 0;
+    }
+    .switches-title {
+        margin-bottom: 0;
+        margin-top: 30px;
+    }
+    .content {
+        padding: 0;
+        .main-map {
+            padding: 0;
+            height: 100%;
+            width: 100%;
+        }
+    }
+    .md-sidenav-left {
+        .hour-slide {
+            margin-top: 20px;
+        }
+        .hour-icon {
+            padding-bottom: 15px;
+            font-size: 3.5em;
+        }
+    }
+}

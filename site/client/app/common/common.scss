@@ -1,0 +1,18 @@
+.md-table {
+    td,
+    th {
+        padding: 12px 16px;
+        text-align: left;
+        font-size: 1.5em;
+    }
+    tr:nth-child(odd) td {
+        background-color: #E3ECF5;
+    }
+    tr:nth-child(even) td {
+        background-color: #D1DEEC;
+    }
+    th {
+        background-color: #4C9EF0;
+        color: white;
+    }
+}

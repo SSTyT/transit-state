@@ -1,0 +1,31 @@
+@import url(http://fonts.googleapis.com/css?family=Roboto);
+@font-face {
+    font-family: "Gotham";
+    src: url(/assets/fonts/gotham-medium.eot);
+    font-weight: normal;
+    font-style: normal;
+}
+
+$primaryColor: #ffbc00;
+$accentColor: #1de9b6;
+$bgColor: #efefef;
+$darkBgColor: #263238;
+$lightBgColor: #37474f;
+$lightTextColor: #f5f5f5;
+$darkTextColor: #212121;
+html {
+    height: 100vh;
+}
+
+body {
+    height: 100vh;
+    font: 62.5% 'Roboto', sans-serif;
+}
+
+.app {
+    height: 100vh;
+    background-color: $darkBgColor;
+    .view {
+        height: 100vh;
+    }
+}
