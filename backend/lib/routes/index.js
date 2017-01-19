@@ -12,5 +12,6 @@ routes.use((req, res, next) => {
 routes.get('/', (req, res) => res.json({ message: 'it works!' }));
 
 require('./corredores')(routes)
+require('./velocidades')(routes)
 
 module.exports = routes;
