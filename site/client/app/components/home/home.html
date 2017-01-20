@@ -6,7 +6,20 @@
                 <h1 class="md-toolbar-tools">Opciones</h1>
             </md-toolbar>
             <md-content layout-padding>
-                <md-datepicker ng-model="myDate" md-placeholder="Enter date" md-min-date="minDate" md-max-date="maxDate"></md-datepicker>
+                <div layout-gt-sm="row">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Día</label>
+                        <input type="number" ng-model="$ctrl.date.day">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Mes</label>
+                        <input type="number" ng-model="$ctrl.date.month">
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Año</label>
+                        <input type="number" ng-model="$ctrl.date.year">
+                    </md-input-container>
+                </div>
                 <md-slider-container class="hour-slide">
                     <i class="material-icons">alarm</i>
                     <md-slider ng-model="$ctrl.hour" ng-change="$ctrl.onHourChange()" aria-label="hour" min="0" max="23" flex md-discrete></md-slider>

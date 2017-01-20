@@ -6,7 +6,7 @@ class HomeController {
     this.hour = 0;
     this.corredores = [];
     this.corredorAPI = corredorAPI;
-
+    this.date = {};
     this.mapControl = {};
     this.mapOpts = {
       mapId: 'map',
