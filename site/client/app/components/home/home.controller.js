@@ -1,12 +1,16 @@
 'use strict';
 
+import moment from 'moment';
+
 class HomeController {
-  constructor(corredorAPI) {
+  constructor(velocidadesAPI, corredorAPI) {
     this.name = 'Home';
     this.hour = 0;
     this.corredores = [];
     this.corredorAPI = corredorAPI;
-    this.date = {};
+    this.velocidadesAPI = velocidadesAPI;
+    this.dateFrom = {};
+    this.dateTo = {};
     this.mapControl = {};
     this.mapOpts = {
       mapId: 'map',
@@ -44,9 +48,9 @@ class HomeController {
     this.corredorAPI.get({}, corredores => corredores.forEach(corredor => this.corredores.push(this.mapControl.addGeoJson(corredor))));
   }
 
-  onHourChange() {
-
+  onFilterChange() {
+    this.velocidadesAPI.get({})
   }
 }
 
-export default ['corredorAPI', HomeController];
+export default ['velocidadesAPI', 'corredorAPI', HomeController];

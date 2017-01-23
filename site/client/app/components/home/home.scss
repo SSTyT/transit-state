@@ -25,6 +25,10 @@
     }
     .md-sidenav-left {
         font-size: 1.5em;
+        .opt-title {
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
         .hour-slide {
             margin-top: 20px;
         }

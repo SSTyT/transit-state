@@ -14,6 +14,7 @@
     "leaflet.markercluster": "^1.0.0-rc.1.0",
     "leaflet.markercluster.freezable": "^0.1.1",
     "material-design-icons": "^3.0.1",
+    "moment": "^2.17.1",
     "normalize.css": "^5.0.0"
   },
   "devDependencies": {
