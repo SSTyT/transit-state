@@ -10,36 +10,38 @@
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Día</label>
-                        <input type="number" ng-change="$ctrl.onFilterChange" ng-model="$ctrl.dateFrom.day">
+                        <input type="number" min="1" max="31" ng-model="$ctrl.dateFrom.day">
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Mes</label>
-                        <input type="number" ng-change="$ctrl.onFilterChange" ng-model="$ctrl.dateFrom.month">
+                        <input type="number" min="1" max="12" ng-model="$ctrl.dateFrom.month">
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Año</label>
-                        <input type="number" ng-change="$ctrl.onFilterChange" ng-model="$ctrl.dateFrom.year">
+                        <input type="number" min="2016" max="9999" ng-model="$ctrl.dateFrom.year">
                     </md-input-container>
+                    <md-button class="md-raised md-primary search" ng-click="$ctrl.onFilterChange()">Buscar</md-button>
                 </div>
+                <corredor-picker corredores="$ctrl.corredoresConsolidados" selected="$ctrl.corredorSelect" on-select="$ctrl.selectChange()"></corredor-picker>
                 <!--h3 class="opt-title">Hasta</h3>
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Día</label>
-                        <input type="number" ng-change="$ctrl.onFilterChange" ng-model="$ctrl.dateTo.day">
+                        <input type="number" ng-change="$ctrl.onFilterChange()" ng-model="$ctrl.dateTo.day">
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Mes</label>
-                        <input type="number" ng-change="$ctrl.onFilterChange" ng-model="$ctrl.dateTo.month">
+                        <input type="number" ng-change="$ctrl.onFilterChange()" ng-model="$ctrl.dateTo.month">
                     </md-input-container>
                     <md-input-container class="md-block" flex-gt-sm>
                         <label>Año</label>
-                        <input type="number" ng-change="$ctrl.onFilterChange" ng-model="$ctrl.dateTo.year">
+                        <input type="number" ng-change="$ctrl.onFilterChange()" ng-model="$ctrl.dateTo.year">
                     </md-input-container>
                 </div-->
                 <h3 class="opt-title">Hora</h3>
                 <md-slider-container class="hour-slide">
                     <i class="material-icons">alarm</i>
-                    <md-slider ng-change="$ctrl.onFilterChange" ng-model="$ctrl.hour" ng-change="$ctrl.onHourChange()" aria-label="hour" min="0" max="23" flex md-discrete></md-slider>
+                    <md-slider ng-change="$ctrl.onFilterChange()" ng-model="$ctrl.hour" ng-change="$ctrl.onHourChange()" aria-label="hour" min="0" max="23" flex md-discrete></md-slider>
                 </md-slider-container>
             </md-content>
         </md-sidenav>

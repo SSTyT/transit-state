@@ -71,9 +71,26 @@ class MapController {
     let myStyle = {};
     Object.assign(myStyle, { color: "#ff7800", weight: 5, opacity: 0.65 }, style);
 
-    return L.geoJSON(geojsonFeature, {
+    const feature = L.geoJSON(geojsonFeature, {
       style: myStyle
     }).addTo(this.map);
+
+    feature.geoJSON = geojsonFeature;
+    feature.added = true;
+    feature.hide = () => {
+      if (feature.added) {
+        feature.added = false;
+        feature.removeFrom(this.map);
+      }
+    }
+    feature.show = () => {
+      if (!feature.added) {
+        feature.added = true;
+        feature.addTo(this.map);
+      }
+    }
+
+    return feature;
   }
 
   addDivMarker(lat, lng, options, cluster, add = true) {

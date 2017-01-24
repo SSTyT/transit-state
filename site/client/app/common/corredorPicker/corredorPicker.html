@@ -1,0 +1,12 @@
+<md-input-container>
+    <label>Corredores</label>
+    <md-select ng-model="$ctrl.selected" ng-change="$ctrl.onSelect()" md-on-close="$ctrl.clearSearchTerm()" data-md-container-class="corredor-picker" multiple>
+        <md-select-header class="select-header">
+            <input ng-model="$ctrl.searchTerm" type="search" placeholder="Buscar corredor.." class="header-searchbox md-text">
+        </md-select-header>
+        <md-optgroup label="Corredores">
+            <md-option ng-value="corredor.ids" ng-repeat="corredor in $ctrl.corredores |
+              filter:{name:$ctrl.searchTerm}">{{corredor.name}}</md-option>
+        </md-optgroup>
+    </md-select>
+</md-input-container>

@@ -3,12 +3,15 @@
 import moment from 'moment';
 
 class HomeController {
-  constructor(velocidadesAPI, corredorAPI) {
+  constructor(velocidadesAPI, corredorAPI, $timeout) {
     this.name = 'Home';
     this.hour = 0;
     this.corredores = [];
+    this.corredoresConsolidados = [];
+    this.corredorSelect = [];
     this.corredorAPI = corredorAPI;
     this.velocidadesAPI = velocidadesAPI;
+    this.timeout = $timeout;
     this.dateFrom = {};
     this.dateTo = {};
     this.mapControl = {};
@@ -45,12 +48,62 @@ class HomeController {
   }
 
   mapReady() {
-    this.corredorAPI.get({}, corredores => corredores.forEach(corredor => this.corredores.push(this.mapControl.addGeoJson(corredor))));
+    this.corredorAPI.get({}, corredores => {
+      corredores.forEach(corredor => this.corredores.push(this.mapControl.addGeoJson(corredor)))
+      this.consolidarCorredores();
+    });
+  }
+
+  selectChange() {
+    let selection;
+    this.timeout(() => {
+      selection = this.corredorSelect.join(';').split(';');
+      this.corredores.forEach(corredor => {
+        if (selection.indexOf(corredor.geoJSON._id) > 0 || selection.length === 0) {
+          corredor.show();
+        } else {
+          corredor.hide();
+        }
+      });
+    });
+  }
+
+  consolidarCorredores() {
+    let keys = {};
+    this.corredores.forEach(corredor => {
+      const name = `${corredor.geoJSON.properties.nombre} - ${corredor.geoJSON.properties.flujo}`;
+      if (keys[name]) {
+        this.corredoresConsolidados[keys[name]].ids += `;${corredor.geoJSON._id}`;
+      } else {
+        this.corredoresConsolidados.push({
+          name: name,
+          ids: `${corredor.geoJSON._id}`
+        });
+        keys[name] = this.corredoresConsolidados.length - 1;
+      }
+    });
+    this.corredoresConsolidados.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
   }
 
   onFilterChange() {
-    this.velocidadesAPI.get({})
+    //TODO arreglar negrada
+    if (this.dateFrom.year && this.dateFrom.month && this.dateFrom.day) {
+      this.velocidadesAPI.getDay({ year: this.dateFrom.year, month: this.dateFrom.month, day: this.dateFrom.day, hour: this.hour }, this.showSpeeds);
+    } else if (this.dateFrom.year && this.dateFrom.month && !this.dateFrom.day) {
+      console.log('mes');
+      this.velocidadesAPI.getMonth({ year: this.dateFrom.year, month: this.dateFrom.month, hour: this.hour }, this.showSpeeds);
+    }
+    /*
+    else if (this.dateFrom.year && !this.dateFrom.month && !this.dateFrom.day) {
+      console.log('año');
+      this.velocidadesAPI.getYear({ year: this.dateFrom.year, hour: this.hour }, this.showSpeeds);
+    }
+    */
+  }
+
+  showSpeeds(speeds) {
+    console.log(speeds);
   }
 }
 
-export default ['velocidadesAPI', 'corredorAPI', HomeController];
+export default ['velocidadesAPI', 'corredorAPI', '$timeout', HomeController];
