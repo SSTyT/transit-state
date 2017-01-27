@@ -49,7 +49,7 @@ class HomeController {
 
   mapReady() {
     this.corredorAPI.get({}, corredores => {
-      corredores.forEach(corredor => this.corredores.push(this.mapControl.addGeoJson(corredor)))
+      corredores.forEach(corredor => this.corredores.push(this.mapControl.addGeoJson(corredor, { color: '#616161' })))
       this.consolidarCorredores();
     });
   }
@@ -59,10 +59,16 @@ class HomeController {
     this.timeout(() => {
       selection = this.corredorSelect.join(';').split(';');
       this.corredores.forEach(corredor => {
-        if (selection.indexOf(corredor.geoJSON._id) > 0 || selection.length === 0) {
-          corredor.show();
-        } else {
-          corredor.hide();
+        if (!corredor.overriden) {
+          if (selection.indexOf(corredor.geoJSON._id) > 0 || selection.length === 0) {
+            corredor.selected = true;
+            corredor.setStyle({ color: '#ff7800' });
+            //corredor.show();
+          } else {
+            corredor.selected = false;
+            corredor.setStyle({ color: '#616161' });
+            //corredor.hide();
+          }
         }
       });
     });
@@ -71,6 +77,20 @@ class HomeController {
   consolidarCorredores() {
     let keys = {};
     this.corredores.forEach(corredor => {
+
+      corredor.on('click', function() {
+        corredor.overriden = true;
+        if (corredor.selected) {
+          corredor.selected = true;
+          corredor.setStyle({ color: '#ff7800' });
+          //corredor.show();
+        } else {
+          corredor.selected = false;
+          corredor.setStyle({ color: '#616161' });
+          //corredor.hide();
+        }
+      });
+
       const name = `${corredor.geoJSON.properties.nombre} - ${corredor.geoJSON.properties.flujo}`;
       if (keys[name]) {
         this.corredoresConsolidados[keys[name]].ids += `;${corredor.geoJSON._id}`;

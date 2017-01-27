@@ -5,7 +5,7 @@ import './corredorPicker.scss';
 let corredorPickerComponent = {
   restrict: 'E',
   bindings: {
-    corredores: '<',
+    corredores: '=',
     selected: '=',
     onSelect: '&'
   },

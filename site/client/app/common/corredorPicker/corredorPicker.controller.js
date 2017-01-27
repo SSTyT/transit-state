@@ -10,6 +10,12 @@ class CorredorPickerController {
   clearSearchTerm() {
     this.searchTerm = '';
   }
+
+  clear() {
+    this.selected = [];
+    this.corredores.forEach(corredor => corredor.overriden = false);
+    this.onSelect();
+  }
 }
 
 export default ['$element', CorredorPickerController];
