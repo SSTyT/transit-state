@@ -13,8 +13,7 @@ class CorredorPickerController {
 
   clear() {
     this.selected = [];
-    this.corredores.forEach(corredor => corredor.overriden = false);
-    this.onSelect();
+    this.onSelect({clear:true});
   }
 }
 

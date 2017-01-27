@@ -6,6 +6,8 @@
                 <h1 class="md-toolbar-tools">Opciones</h1>
             </md-toolbar>
             <md-content layout-padding>
+                <h3 class="opt-title">Corredores</h3>
+                <corredor-picker corredores="$ctrl.corredoresConsolidados" selected="$ctrl.corredorSelect" on-select="$ctrl.selectChange(clear)"></corredor-picker>
                 <h3 class="opt-title">Fecha</h3>
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
@@ -22,7 +24,6 @@
                     </md-input-container>
                     <md-button class="md-raised md-primary search" ng-click="$ctrl.onFilterChange()">Buscar</md-button>
                 </div>
-                <corredor-picker corredores="$ctrl.corredoresConsolidados" selected="$ctrl.corredorSelect" on-select="$ctrl.selectChange()"></corredor-picker>
                 <!--h3 class="opt-title">Hasta</h3>
                 <div layout-gt-sm="row">
                     <md-input-container class="md-block" flex-gt-sm>
