@@ -1,6 +1,8 @@
 'use strict';
 
-import moment from 'moment';
+import CheapRuler from 'cheap-ruler';
+
+const ruler = new CheapRuler(-34, 'kilometers');
 
 class HomeController {
   constructor(velocidadesAPI, corredorAPI, $timeout) {
@@ -49,13 +51,13 @@ class HomeController {
 
   mapReady() {
     this.corredorAPI.get({}, corredores => {
+      console.log(corredores);
       corredores.forEach(corredor => this.corredores.push(this.mapControl.addGeoJson(corredor, { color: '#616161' })))
       this.consolidarCorredores();
     });
   }
 
   selectChange(clear) {
-    console.log(clear);
     let selection;
     this.timeout(() => {
       selection = this.corredorSelect.join(';').split(';');
@@ -108,12 +110,13 @@ class HomeController {
   }
 
   onFilterChange() {
+    const corredores = this.corredores.filter(corredor => corredor.selected).map(corredor => corredor.geoJSON._id).reduce((acc, id) => acc ? `${acc};${id}` : id, '');
     //TODO arreglar negrada
     if (this.dateFrom.year && this.dateFrom.month && this.dateFrom.day) {
-      this.velocidadesAPI.getDay({ year: this.dateFrom.year, month: this.dateFrom.month, day: this.dateFrom.day, hour: this.hour }, this.showSpeeds);
+      this.velocidadesAPI.getDay({ year: this.dateFrom.year, month: this.dateFrom.month, day: this.dateFrom.day, hour: this.hour, corredores }, this.showSpeeds);
     } else if (this.dateFrom.year && this.dateFrom.month && !this.dateFrom.day) {
       console.log('mes');
-      this.velocidadesAPI.getMonth({ year: this.dateFrom.year, month: this.dateFrom.month, hour: this.hour }, this.showSpeeds);
+      this.velocidadesAPI.getMonth({ year: this.dateFrom.year, month: this.dateFrom.month, hour: this.hour, corredores }, this.showSpeeds);
     }
     /*
     else if (this.dateFrom.year && !this.dateFrom.month && !this.dateFrom.day) {
@@ -124,7 +127,27 @@ class HomeController {
   }
 
   showSpeeds(speeds) {
-    console.log(speeds);
+    //console.log(speeds);
+    //return;
+
+    const speedMap = new Map([]);
+    const aggregatedSpeeds = speeds.reduce((acc, speed) => {
+      if (acc[speed.corredor]) {
+        acc[speed.corredor].push(speed);
+      } else {
+        acc[speed.corredor] = [speed];
+      }
+      return acc;
+    }, {});
+
+    Object.keys(aggregatedSpeeds).forEach(key => {
+      speedMap.set(key, aggregatedSpeeds[key].reduce((acc, speed) => acc += speed.ida, 0) / aggregatedSpeeds[key].length);
+    });
+
+    const time = 0;
+    speedMap.forEach((speed, id) => {
+      const dist = ruler.lineDistance(this.corredores[id].geoJSON.geometry.coordinates);
+    });
   }
 }
 

@@ -10,6 +10,7 @@
     "angular-material": "^1.1.1",
     "angular-resource": "^1.6.1",
     "angular-ui-router": "^1.0.0-beta.1",
+    "cheap-ruler": "^2.4.1",
     "leaflet": "^1.0.0-rc.3",
     "leaflet.markercluster": "^1.0.0-rc.1.0",
     "leaflet.markercluster.freezable": "^0.1.1",
